@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Persistence/1.0.0": {
+        "dependencies": {
+          "Domen": "1.0.0"
+        },
+        "runtime": {
+          "Persistence.dll": {}
+        }
+      },
+      "Domen/1.0.0": {
+        "runtime": {
+          "Domen.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Persistence/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Domen/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
