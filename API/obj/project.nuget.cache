@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9v5TYE8JSeEv89bS6r6tbqsiwQIDnqpneAQY4ZgS3gAGNcNi/n1aXjszY0iMR4PL5ePlB8km4pEuA2Z42zwFqA==",
+  "dgSpecHash": "jhfQfctA0M/955xBT8FpBF0ogpFTXWG5CP/04zKojzEEOstul8wmpffors63kAUJLJOSfy/jFGUejCzAeYu9Aw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\danij\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\danij\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

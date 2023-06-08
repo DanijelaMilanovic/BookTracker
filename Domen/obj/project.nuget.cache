@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P0A8FHHEXjsMkokUtC6RHF++r1Vv7fShbEgQrc2+BHDqU32AKEm07Q2K3jHFUPMF0TZuhUZpq85jOGieJi4GZA==",
+  "dgSpecHash": "qujSI8W93gJkMSD6szvd+3WJM+dFcv70oXWrK3oHqdJFTIgsqJVuN5m8shS8Lqpo87YSFoA751t+/zETmjPteA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj",
+  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

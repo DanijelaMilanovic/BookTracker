@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Cuzw7G9hUe4YeoTVoiOD/avpT+0wsqNcROnbxrVvqiQtc3y4uExoHvtP3xlRRiUUpmTIxZAeCw+ign9ap6OdnA==",
+  "dgSpecHash": "sm9HCj/g33kv+FzZEv4sM1fwbQu219sYFI4GxK3kCVdDAyoKPopLc++gcYhbOR6EElYe25PLrzPTxmI3zpq1dQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Application\\Application.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

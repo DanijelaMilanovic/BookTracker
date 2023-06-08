@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj": {}
+    "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj": {}
   },
   "projects": {
-    "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj": {
+    "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj",
-        "projectName": "Domen",
-        "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj",
+        "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
         "packagesPath": "C:\\Users\\danij\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\obj\\",
+        "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\danij\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,14 +59,14 @@
         }
       }
     },
-    "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj": {
+    "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj",
+        "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj",
         "projectName": "Persistence",
-        "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj",
+        "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj",
         "packagesPath": "C:\\Users\\danij\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\obj\\",
+        "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\danij\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -83,8 +83,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj": {
-                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj"
+              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
+                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj"
               }
             }
           }

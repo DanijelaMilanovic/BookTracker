@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aDohpGo7QYUD/V3cLlGDWdEzCfdtg8xhNoQYYyLUbpB3QzCmaAWxGrFLBYqawN/FP6vXem1q4NwLlZCyiEGBvA==",
+  "dgSpecHash": "XiL23TIHmb8+PR2/eQYAq0He3RarI8MKKQleNGnGJZ0xKFFlnQf7BTJjt+KvSe4hd49TRvRrv/w04tEKxUJDKQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj",
+  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

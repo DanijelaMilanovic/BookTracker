@@ -8,21 +8,21 @@
     ".NETCoreApp,Version=v6.0": {
       "Application/1.0.0": {
         "dependencies": {
-          "Domen": "1.0.0",
+          "Domain": "1.0.0",
           "Persistence": "1.0.0"
         },
         "runtime": {
           "Application.dll": {}
         }
       },
-      "Domen/1.0.0": {
+      "Domain/1.0.0": {
         "runtime": {
-          "Domen.dll": {}
+          "Domain.dll": {}
         }
       },
       "Persistence/1.0.0": {
         "dependencies": {
-          "Domen": "1.0.0"
+          "Domain": "1.0.0"
         },
         "runtime": {
           "Persistence.dll": {}
@@ -36,7 +36,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Domen/1.0.0": {
+    "Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

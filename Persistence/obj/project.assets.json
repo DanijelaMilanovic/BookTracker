@@ -2,28 +2,28 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Domen/1.0.0": {
+      "Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "compile": {
-          "bin/placeholder/Domen.dll": {}
+          "bin/placeholder/Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Domen.dll": {}
+          "bin/placeholder/Domain.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Domen/1.0.0": {
+    "Domain/1.0.0": {
       "type": "project",
-      "path": "../Domen/Domen.csproj",
-      "msbuildProject": "../Domen/Domen.csproj"
+      "path": "../Domen/Domain.csproj",
+      "msbuildProject": "../Domen/Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Domen >= 1.0.0"
+      "Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj",
+      "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj",
       "projectName": "Persistence",
-      "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\Persistence.csproj",
+      "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj",
       "packagesPath": "C:\\Users\\danij\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Persistence\\obj\\",
+      "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\danij\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj": {
-              "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj"
+            "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
+              "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj"
             }
           }
         }

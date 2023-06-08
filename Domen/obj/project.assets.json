@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj",
-      "projectName": "Domen",
-      "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\Domen.csproj",
+      "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
+      "projectName": "Domain",
+      "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
       "packagesPath": "C:\\Users\\danij\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\Testni\\BookTracker\\Domen\\obj\\",
+      "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\danij\\AppData\\Roaming\\NuGet\\NuGet.Config",
