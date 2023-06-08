@@ -5,6 +5,6 @@ import MyComponent from '../Component/MyComponent';
 test('renders component with correct name', () => {
   const name = 'John';
   const { getByText } = render(<MyComponent name={name} />);
-  const componentElement = getByText(`Hellp, ${name}!`);
+  const componentElement = getByText(`Hello, ${name}!`);
   expect(componentElement).toBeInTheDocument(); 
 });

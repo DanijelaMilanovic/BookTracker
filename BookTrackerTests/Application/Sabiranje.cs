@@ -14,7 +14,7 @@ namespace BookTrackerTests.Application
         public void Test()
         {
             var value = Saberi.Add(1, 2);
-            Assert.Equal(3, value);
+            Assert.Equal(4, value);
         }
     }
 }
