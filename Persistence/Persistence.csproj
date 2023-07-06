@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Domen\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.8" />
+  </ItemGroup>
+
 </Project>
