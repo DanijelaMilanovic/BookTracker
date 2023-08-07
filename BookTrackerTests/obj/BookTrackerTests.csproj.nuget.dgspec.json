@@ -103,8 +103,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
-                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj"
+              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj"
               },
               "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj": {
                 "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj"
@@ -171,8 +171,8 @@
               "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Application\\Application.csproj": {
                 "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Application\\Application.csproj"
               },
-              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
-                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj"
+              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj"
               },
               "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj": {
                 "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Persistence\\Persistence.csproj"
@@ -231,14 +231,14 @@
         }
       }
     },
-    "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
+    "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj",
+        "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\danij\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\obj\\",
+        "outputPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\danij\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -266,6 +266,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.20, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -310,8 +316,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
-                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj"
+              "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj"
               }
             }
           }
