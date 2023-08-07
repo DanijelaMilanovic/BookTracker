@@ -1,3 +1,4 @@
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -13,6 +14,13 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddIdentityCore<AppUser>(opt => 
+{
+    opt.Password.RequireNonAlphanumeric = false;
+})
+.AddEntityFrameworkStores<DataContext>();
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
