@@ -1562,8 +1562,8 @@
     },
     "Domain/1.0.0": {
       "type": "project",
-      "path": "../Domen/Domain.csproj",
-      "msbuildProject": "../Domen/Domain.csproj"
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
     },
     "Persistence/1.0.0": {
       "type": "project",

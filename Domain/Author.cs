@@ -1,4 +1,4 @@
-namespace Domen
+namespace Domain
 {
     public class Author
     {

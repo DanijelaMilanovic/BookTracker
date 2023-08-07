@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uNCGYLTFAoZhsKjz0n+yPWSveCo9mZJunoFjnvKZRc2wvhPNFUhfyvyIGIUgWMIxeXKYstHWw46p4piJZ9qYQA==",
+  "dgSpecHash": "Mk9rRV7DBM/nNMJ++O9mvjXqnhZBA171xjC8sqJq4LR4gvYDzavmYoEf8tQ7bnZw4GgbD0GfsfR5EgHuABlFGg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\danij\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\danij\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.8\\microsoft.data.sqlite.core.7.0.8.nupkg.sha512",

@@ -1192,8 +1192,8 @@
     },
     "Domain/1.0.0": {
       "type": "project",
-      "path": "../Domen/Domain.csproj",
-      "msbuildProject": "../Domen/Domain.csproj"
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1229,8 +1229,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj": {
-              "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domen\\Domain.csproj"
+            "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\danij\\OneDrive\\Desktop\\BookTracker\\Domain\\Domain.csproj"
             }
           }
         }

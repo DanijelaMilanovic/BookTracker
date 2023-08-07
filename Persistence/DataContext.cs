@@ -1,4 +1,4 @@
-﻿using Domen;
+﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
@@ -10,5 +10,6 @@ namespace Persistence
         }
 
         public DbSet<Author> Author { get; set; }
+        public DbSet<Book> Book { get; set; }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using API.Controllers;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using Xunit;
 
 namespace API.Tests
 {
@@ -12,13 +8,10 @@ namespace API.Tests
         [Fact]
         public void Get_ReturnsWeatherForecasts()
         {
-            // Arrange
             var controller = new WeatherForecastController(new LoggerFactory().CreateLogger<WeatherForecastController>());
 
-            // Act
             var result = controller.Get();
 
-            // Assert
             Assert.NotNull(result);
 
             var forecastList = result.ToList();
