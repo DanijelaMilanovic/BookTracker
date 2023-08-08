@@ -3,16 +3,28 @@ namespace Domain
     public class Book
     {
         public Guid BookId { get; set; }
-        public String ISBN { get; set; }
-        public String Title { get; set; }
-        public String Image { get; set; }
+        public string ISBN { get; set; }
+        public string Title { get; set; }
+        public string Image { get; set; }
         public int NoOfPages { get; set; }
         public int YearOfPublishing { get; set; }
         public DateOnly PurshaseDate { get; set; }
         public decimal Price { get; set; }
         public decimal Rate { get; set; }
-        public String Description { get; set; }
-        public Boolean IsRead { get; set; }
+        public string Description { get; set; }
+        public bool IsRead { get; set; }
+        public BookType BookType { get; set; }
+        public Guid BookTypeId { get; set; }
+        public Publisher Publisher { get; set; }
+        public Guid PublisherId { get; set; }
+        public Format Format { get; set; }
+        public Guid FormatId { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+        public ICollection<BookAuthors> Authors { get; set; } = new List<BookAuthors>();
+        public ICollection<BookGenres> Genres { get; set; } = new List<BookGenres>();
+        public ICollection<BookSeries> Series { get; set; } = new List<BookSeries>();
+
         
     }
 }

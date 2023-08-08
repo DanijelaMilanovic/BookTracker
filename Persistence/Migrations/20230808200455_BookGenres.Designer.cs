@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230808200455_BookGenres")]
+    partial class BookGenres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
@@ -204,24 +207,6 @@ namespace Persistence.Migrations
                     b.ToTable("BookGenres");
                 });
 
-            modelBuilder.Entity("Domain.BookSeries", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("SeriesId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AppUserId", "BookId", "SeriesId");
-
-                    b.HasIndex("SeriesId");
-
-                    b.ToTable("BookSeries");
-                });
-
             modelBuilder.Entity("Domain.BookType", b =>
                 {
                     b.Property<Guid>("BookTypeId")
@@ -279,23 +264,6 @@ namespace Persistence.Migrations
                     b.HasKey("PublisherId");
 
                     b.ToTable("Publisher");
-                });
-
-            modelBuilder.Entity("Domain.Series", b =>
-                {
-                    b.Property<Guid>("SeriesId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("NoInASeries")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("SeriesId");
-
-                    b.ToTable("Series");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -515,33 +483,6 @@ namespace Persistence.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("Domain.BookSeries", b =>
-                {
-                    b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Series", "Series")
-                        .WithMany("Books")
-                        .HasForeignKey("SeriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Book", "Book")
-                        .WithMany("Series")
-                        .HasForeignKey("AppUserId", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Series");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -608,16 +549,9 @@ namespace Persistence.Migrations
                     b.Navigation("Authors");
 
                     b.Navigation("Genres");
-
-                    b.Navigation("Series");
                 });
 
             modelBuilder.Entity("Domain.Genre", b =>
-                {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("Domain.Series", b =>
                 {
                     b.Navigation("Books");
                 });

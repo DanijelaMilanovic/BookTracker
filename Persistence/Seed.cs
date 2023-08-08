@@ -74,7 +74,7 @@ namespace Persistence
             };
 
             //await context.Author.AddRangeAsync(authors);
-            await context.Book.AddRangeAsync(books);
+           // await context.Book.AddRangeAsync(books);
             await context.SaveChangesAsync();
         }
     }

@@ -8,6 +8,6 @@ namespace Domain
     public class BookType
     {
         public Guid BookTypeId { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
     }
 }

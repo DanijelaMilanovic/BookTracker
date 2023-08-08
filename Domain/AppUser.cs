@@ -8,9 +8,9 @@ namespace Domain
 {
     public class AppUser : IdentityUser
     {
-        public String Forename { get; set; }
-        public String Surname { get; set; }
-        public String Image { get; set; }
-        
+        public string Forename { get; set; }
+        public string Surname { get; set; }
+        public string Image { get; set; }
+        public ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }
