@@ -13,7 +13,6 @@ namespace Persistence
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
         public DbSet<Format> Format { get; set; }
-        public DbSet<BookType> BookType { get; set; }
         public DbSet<Publisher> Publisher { get; set; }
         public DbSet<BookAuthors> BookAuthors { get; set; }
         public DbSet<BookGenres> BookGenres { get; set; }
@@ -30,11 +29,6 @@ namespace Persistence
                 .WithOne(a => a.AppUser)
                 .HasForeignKey(ap => ap.AppUserId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired();
-            builder.Entity<Book>()
-                .HasOne(b => b.BookType)
-                .WithMany()
-                .HasForeignKey(b => b.BookTypeId)
                 .IsRequired();
             builder.Entity<Book>()
                 .HasOne(b => b.Publisher)

@@ -13,5 +13,7 @@ namespace Domain
         public AppUser AppUser { get; set; }
         public Guid SeriesId { get; set; }
         public Series Series { get; set; }
+        public int NoInASeries { get; set; }
+
     }
 }

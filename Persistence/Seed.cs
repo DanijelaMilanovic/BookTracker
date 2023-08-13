@@ -1,35 +1,50 @@
 using System.Globalization;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            //if (context.Author.Any()) return;
-            if (context.Book.Any()) return;
             var authors = new List<Author>
             {
                 new Author
                 {
-                    Forename = "Sarah",
-                    Surename = "J Mass",
+                    Forename = "Sarah J.",
+                    Surename = "Mass",
                     Bio = "Sarah Janet Maas (born March 5, 1986) is an American fantasy author known for her fantasy series Throne of Glass, A Court of Thorns and Roses,[1] and Crescent City. As of 2022, she has sold over twelve million copies of her books and her work has been translated into 37 languages"
                 },
                 new Author
                 {
-                    Forename = "Leigh",
-                    Surename = "Bardugo",
-                    Bio = "Leigh Bardugo is an Israeli-American fantasy author. She is best known for her young adult Grishaverse novels, which include the Shadow and Bone trilogy, the Six of Crows dilogy, and the King of Scars dilogy. She also received acclaim for her paranormal fantasy adult debut, Ninth House. The Shadow and Bone and Six of Crows series have been adapted into Shadow and Bone by Netflix and Ninth House will be adapted by Amazon Studios; Bardugo is an executive producer on both works."
+                    Forename = "Alan",
+                    Surename = "Shalloway",
+                    Bio = "Alan Shalloway is the founder and CEO of Net Objectives. With over 40 years of experience, Alan is an industry thought leader in Lean, Kanban, product portfolio management, Scrum and agile design. He helps companies transition to Lean and Agile methods enterprise-wide as well teaches courses in these areas."
                 },
                 new Author
                 {
-                    Forename = "Ali",
-                    Surename = "Hazelwood",
-                    Bio = "Ali Hazelwood is the pen name of an Italian neuroscience professor[1] and writer of romance novels. Her stories center around women in STEM fields and academia. Her debut novel, The Love Hypothesis, was a New York Times best seller.[2]"
+                    Forename = "James R.",
+                    Surename = "Trott",
+                    Bio = "James R. Trott is a senior consultant for a large software company in the Pacific Northwest and formerly was a senior engineer for a large aerospace company. He holds a master of science in applied mathematics, an MBA, and a master of arts in intercultural studies."
                 }
             };
+            var users = new List<AppUser> 
+            {
+                 new AppUser
+                    {
+                        Forename = "Danijela",
+                        Surname = "Milanovic",
+                        UserName = "DanijelaMilanovic",
+                        Email = "danijela@test.com"
+                    }
+            };
+            /*
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+            }
+            */
             var books = new List<Book>
             {
                 new Book
@@ -43,39 +58,44 @@ namespace Persistence
                     Price = 20.00m, 
                     Rate = 5.0m, 
                     Description = "", 
-                    IsRead = true
+                    IsRead = true,
+                    FormatId = new Guid("0390d402-1700-4995-86f4-6de7b79b1c6a"),
+                    PublisherId = new Guid("efc3a0cf-79cb-4611-8fbc-98c16f53b4c6"),
+                    Authors = new List<BookAuthors> {
+                        new BookAuthors {
+                            Author = authors[1]
+                        },
+                        new BookAuthors {
+                            Author = authors[2]
+                        }
+                    },
+                    AppUser = users[0]
                 },
                 new Book
-                { 
-                    ISBN = "9781408725764",
-                    Title = "The Love Hypothesis",
-                    Image = "",
-                    NoOfPages = 376, 
-                    YearOfPublishing = 2021,  
-                    PurshaseDate = DateOnly.Parse("05.02.2023", new CultureInfo("hr-HR")),  
-                    Price = 26.00m, 
-                    Rate = 5.0m, 
-                    Description = "", 
-                    IsRead = true
-                    },
-                new Book
                 {
-                    ISBN = "9781408725771",
-                    Title = "Love on the Brain",
+                    ISBN = "8675552386",
+                    Title = "Projektni obrasci: Nove tehnike objektno orjentisanog pogramiranja",
                     Image = "",
-                    NoOfPages = 350, 
-                    YearOfPublishing = 2022,  
-                    PurshaseDate = DateOnly.Parse("05.02.2023", new CultureInfo("hr-HR")), 
-                    Price = 20.00m, 
-                    Rate = 5.0m, 
+                    NoOfPages = 254, 
+                    YearOfPublishing = 2004,  
+                    PurshaseDate = DateOnly.Parse("17.02.2023", new CultureInfo("hr-HR")), 
+                    Price = 21.00m, 
                     Description = "", 
-                    IsRead = true  
+                    IsRead = true,
+                    FormatId = new Guid("0390d402-1700-4995-86f4-6de7b79b1c6a"),
+                    PublisherId = new Guid("f0b651a1-b419-4b5f-8092-774fdb130427"),
+                    Authors = new List<BookAuthors> {
+                        new BookAuthors {
+                            Author = authors[0]
+                        }
+                    },
+                    AppUser = users[0]  
                 }
             };
-
             //await context.Author.AddRangeAsync(authors);
-           // await context.Book.AddRangeAsync(books);
+            //await context.Book.AddRangeAsync(books);
             await context.SaveChangesAsync();
+            
         }
     }
 }

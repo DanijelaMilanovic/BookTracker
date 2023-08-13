@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230812132614_AttrubuteChange")]
+    partial class AttrubuteChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
@@ -107,7 +110,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Author", (string)null);
+                    b.ToTable("Author");
                 });
 
             modelBuilder.Entity("Domain.Book", b =>
@@ -160,7 +163,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Book", (string)null);
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("Domain.BookAuthors", b =>
@@ -178,7 +181,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("BookAuthors", (string)null);
+                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("Domain.BookGenres", b =>
@@ -196,7 +199,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("BookGenres", (string)null);
+                    b.ToTable("BookGenres");
                 });
 
             modelBuilder.Entity("Domain.BookSeries", b =>
@@ -217,7 +220,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("SeriesId");
 
-                    b.ToTable("BookSeries", (string)null);
+                    b.ToTable("BookSeries");
                 });
 
             modelBuilder.Entity("Domain.Format", b =>
@@ -231,7 +234,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("FormatId");
 
-                    b.ToTable("Format", (string)null);
+                    b.ToTable("Format");
                 });
 
             modelBuilder.Entity("Domain.Genre", b =>
@@ -245,7 +248,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("Genre", (string)null);
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("Domain.Publisher", b =>
@@ -262,7 +265,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("PublisherId");
 
-                    b.ToTable("Publisher", (string)null);
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("Domain.Series", b =>
@@ -276,7 +279,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("SeriesId");
 
-                    b.ToTable("Series", (string)null);
+                    b.ToTable("Series");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -13,8 +13,6 @@ namespace Domain
         public decimal Rate { get; set; }
         public string Description { get; set; }
         public bool IsRead { get; set; }
-        public BookType BookType { get; set; }
-        public Guid BookTypeId { get; set; }
         public Publisher Publisher { get; set; }
         public Guid PublisherId { get; set; }
         public Format Format { get; set; }
