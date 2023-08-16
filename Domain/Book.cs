@@ -22,7 +22,5 @@ namespace Domain
         public ICollection<BookAuthors> Authors { get; set; } = new List<BookAuthors>();
         public ICollection<BookGenres> Genres { get; set; } = new List<BookGenres>();
         public ICollection<BookSeries> Series { get; set; } = new List<BookSeries>();
-
-        
     }
 }
