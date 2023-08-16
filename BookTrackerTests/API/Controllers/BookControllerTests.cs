@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System.Security.Claims;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookTrackerTests.API.Controllers
 {
@@ -81,10 +80,8 @@ namespace BookTrackerTests.API.Controllers
             context.SaveChanges();
             var controller = new BooksController(context, userManager);
 
-            // Act
             var result = await controller.GetBooks();
 
-            // Assert
             var objectResult = Assert.IsType<OkObjectResult>(result);
             var returnedBooks = Assert.IsAssignableFrom<IEnumerable<Book>>(objectResult.Value);
             Assert.Equal(1, returnedBooks.Count()); ;
@@ -130,7 +127,6 @@ namespace BookTrackerTests.API.Controllers
 
             var result = await controller.GetBook(book.BookId);
 
-            // Assert
             var objectResult = Assert.IsType<OkObjectResult>(result);
             var returnedBook = Assert.IsAssignableFrom<Book>(objectResult.Value);
 
