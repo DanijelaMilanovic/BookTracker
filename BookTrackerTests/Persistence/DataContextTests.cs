@@ -3,6 +3,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using API.Controllers;
+using Application.Core;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using System.Security.Claims;
 
 namespace BookTrackerTests.Persistence
 {
@@ -59,19 +66,16 @@ namespace BookTrackerTests.Persistence
         public void CanLoadFormat()
         {
             var context = new DataContext(CreateNewContextOptions());
-            var format1 = new Format
+            var format = new List<Format>
             {
-                Name = "Paperback"
+                new Format { Name = "Paperback"},
+                new Format { Name = "Hardback"}
             };
-            var format2 = new Format
-            {
-                Name = "Hardback"
-            };
+            
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
-            context.Format.Add(format1);
-            context.Format.Add(format2);
+            context.Format.AddRange(format);
             context.SaveChanges();
 
             Assert.Equal(2, context.Format.Count());
@@ -270,6 +274,5 @@ namespace BookTrackerTests.Persistence
             Assert.NotNull(savedBookAuthors);
             context.Database.CloseConnection();
         }
-        
     }
 }

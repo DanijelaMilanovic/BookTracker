@@ -2,22 +2,31 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Core;
+using MediatR;
 
 namespace Application.Books
 {
     public class List
     {
-        private readonly DataContext _context;
-        public List(DataContext context)
-        {
-            _context = context;
+        public class Query : IRequest<Result<List<Book>>> 
+        { 
+            public string UserId {get; set;}
+            
         }
 
-        public async Task<Result<List<Book>>> ListBooks()
+        public class Handler : IRequestHandler<Query, Result<List<Book>>>
         {
-            var books = await _context.Book.ToListAsync();
-            return Result<List<Book>>.Success(books);
-        }
+            private readonly DataContext _context;
+            public Handler(DataContext context)
+            {
+                _context = context;
+            }
 
+            public async Task<Result<List<Book>>> Handle(Query request, CancellationToken cancellationToken)
+            {
+                var books = await _context.Book.Where(x => x.AppUserId == request.UserId).ToListAsync();
+                return Result<List<Book>>.Success(books);
+            }
+        }
     }
 }

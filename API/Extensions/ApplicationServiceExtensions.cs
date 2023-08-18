@@ -1,5 +1,7 @@
 using Persistence;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
+using Application.Books;
 
 namespace API.Extensions
 {
@@ -13,7 +15,7 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
-
+            services.AddMediatR(typeof(List.Handler));
             return services;
         }
     }
