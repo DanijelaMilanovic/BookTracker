@@ -4,8 +4,6 @@ using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,68 +16,19 @@ namespace BookTrackerTests.API.Controllers
 {
     public class BookControllerTests
     {
-        private DbContextOptions<DataContext> CreateNewContextOptions()
-        {
-            var options = new DbContextOptionsBuilder<DataContext>()
-                .UseSqlite("Data Source=:memory:")
-                .Options;
-
-            return options;
-        }
-
-        private UserManager<AppUser> CreateUserManager(DataContext context)
-        {
-            var userStore = new UserStore<AppUser>(context);
-            var userManager = new UserManager<AppUser>(userStore, null, null, null, null, null, null, null, null);
-            return userManager;
-        }
-
-        private Book CreateBook(string appUserId)
-        {
-            var format = new Format
-            {
-                FormatId = Guid.NewGuid(),
-                Name = "Format1"
-            };
-            var publisher = new Publisher
-            {
-                PublisherId = Guid.NewGuid(),
-                Name = "Publisher",
-                Address = "Adress"
-            };
-
-            var book = new Book
-            {
-                AppUserId = appUserId,
-                BookId = Guid.NewGuid(),
-                Title = "Test Book",
-                NoOfPages = 200,
-                YearOfPublishing = 2023,
-                PurshaseDate = new DateOnly(2023, 1, 1),
-                Price = 20.00m,
-                Rate = 5.00m,
-                Publisher = publisher,
-                Format = format
-            };
-            return book;
-        }
-        //Integracioni testovi, moze da radi funkciju samo ako je korisnik autorizovan
-        //tj ako je prijavljen i posjeduje knjige 
- 
         [Fact]
         public async Task CanListBooks()
         {
             var services = new ServiceCollection();
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
 
-            // Dodajte DataContext servis u servis provider za testiranje
             services.AddSingleton(context);
 
             var serviceProvider = services.BuildServiceProvider();
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
-            var userManager = CreateUserManager(context);
+            var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser
             {
                 Id = Guid.NewGuid().ToString(),
@@ -88,8 +37,8 @@ namespace BookTrackerTests.API.Controllers
             await userManager.CreateAsync(appUser);
 
             var books = new List<Book> {
-                CreateBook(appUser.Id) ,
-                CreateBook(appUser.Id) ,
+                TestSetup.CreateBook(appUser.Id) ,
+                TestSetup.CreateBook(appUser.Id) ,
             };
 
             context.Book.AddRange(books);
@@ -111,18 +60,14 @@ namespace BookTrackerTests.API.Controllers
                 }
             };
 
-            // Upotreba refleksije za postavljanje Mediator-a
             var mediatorField = typeof(BaseApiController).GetField("_mediator", BindingFlags.NonPublic | BindingFlags.Instance);
             mediatorField.SetValue(controller, mockMediator.Object);
 
-            // Postavite povratni rezultat za Mock<IMediator>
             mockMediator.Setup(m => m.Send(It.Is<List.Query>(q => q.UserId == appUser.Id), default))
                        .ReturnsAsync(Result<List<Book>>.Success(books));
 
-            // Izvršite akciju GetBooks
             var result = await controller.GetBooks();
 
-            // Provjerite povratni rezultat
             var objectResult = Assert.IsType<OkObjectResult>(result);
             var returnedBooks = Assert.IsAssignableFrom<List<Book>>(objectResult.Value);
             Assert.Equal(2, returnedBooks.Count);
@@ -133,11 +78,11 @@ namespace BookTrackerTests.API.Controllers
         [Fact]
         public async Task CanGetBookById()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
-            var userManager = CreateUserManager(context);
+            var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser 
             { 
                 Id = Guid.NewGuid().ToString(),
@@ -145,8 +90,8 @@ namespace BookTrackerTests.API.Controllers
             };
             await userManager.CreateAsync(appUser);
 
-            var book = CreateBook(appUser.Id);
-            var book2 = CreateBook(appUser.Id);
+            var book = TestSetup.CreateBook(appUser.Id);
+            var book2 = TestSetup.CreateBook(appUser.Id);
 
             context.Book.Add(book2);
             context.Book.Add(book);
@@ -169,21 +114,169 @@ namespace BookTrackerTests.API.Controllers
                 }
             };
 
-            // Upotreba refleksije za postavljanje Mediator-a
             var mediatorField = typeof(BaseApiController).GetField("_mediator", BindingFlags.NonPublic | BindingFlags.Instance);
             mediatorField.SetValue(controller, mockMediator.Object);
 
-            // Postavite povratni rezultat za Mock<IMediator>
             mockMediator.Setup(m => m.Send(It.Is<Details.Query>(q => q.UserId == appUser.Id && q.BookId == book.BookId), default))
            .ReturnsAsync(Result<Book>.Success(book));
 
-            //citaj knjige kao prijavljen korisnik 
             var result = await controller.GetBook(book.BookId);
 
             var objectResult = Assert.IsType<OkObjectResult>(result);
             var returnedBook = Assert.IsAssignableFrom<Book>(objectResult.Value);
 
             Assert.Equal(book.BookId, returnedBook.BookId);
+
+            context.Database.CloseConnection();
+        }
+
+        [Fact]
+        public async Task CanCreateBook()
+        {
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            var userManager = TestSetup.CreateUserManager(context);
+            var appUser = new AppUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "user123"
+            };
+            await userManager.CreateAsync(appUser);
+
+            var book = TestSetup.CreateBook(appUser.Id);
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, appUser.Id),
+                new Claim(ClaimTypes.Name, appUser.UserName)
+            }, "mock"));
+
+            var mockMediator = new Mock<IMediator>();
+
+            var controller = new BooksController
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext { User = user },                
+                }
+            };
+
+            var mediatorField = typeof(BaseApiController).GetField("_mediator", BindingFlags.NonPublic | BindingFlags.Instance);
+            mediatorField.SetValue(controller, mockMediator.Object);
+
+            mockMediator.Setup(m => m.Send(It.Is<Create.Command>(q => q.Book == book), default))
+                .ReturnsAsync(Result<Unit>.Success(Unit.Value));
+
+            var result = await controller.CreateBook(book);
+
+            var objectResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
+
+            context.Database.CloseConnection();
+        }
+
+        [Fact]
+        public async Task CanEditBook()
+        {
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            var userManager = TestSetup.CreateUserManager(context);
+            var appUser = new AppUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "user123"
+            };
+            await userManager.CreateAsync(appUser);
+
+            var book = TestSetup.CreateBook(appUser.Id);
+            var edit = TestSetup.CreateBook(appUser.Id);
+            edit.Title = "New edited title";
+
+            context.Book.Add(book);
+
+            context.SaveChanges();
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, appUser.Id),
+                new Claim(ClaimTypes.Name, appUser.UserName)
+            }, "mock"));
+
+            var mockMediator = new Mock<IMediator>();
+
+            var controller = new BooksController
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext { User = user }
+                }
+            };
+
+            var mediatorField = typeof(BaseApiController).GetField("_mediator", BindingFlags.NonPublic | BindingFlags.Instance);
+            mediatorField.SetValue(controller, mockMediator.Object);
+
+            mockMediator.Setup(m => m.Send(It.Is<Edit.Command>(q =>q.Book == edit && q.UserId == appUser.Id && q.BookId == book.BookId), default))
+               .ReturnsAsync(Result<Unit>.Success(Unit.Value));
+            
+            var result = await controller.EditBook(edit, book.BookId);
+
+            var objectResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
+
+            context.Database.CloseConnection();
+        }
+
+
+        [Fact]
+        public async Task CanDeleteBook()
+        {
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            var userManager = TestSetup.CreateUserManager(context);
+            var appUser = new AppUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "user123"
+            };
+            await userManager.CreateAsync(appUser);
+
+            var book = TestSetup.CreateBook(appUser.Id);
+            context.Book.Add(book);
+
+            context.SaveChanges();
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, appUser.Id),
+                new Claim(ClaimTypes.Name, appUser.UserName)
+            }, "mock"));
+
+            var mockMediator = new Mock<IMediator>();
+
+            var controller = new BooksController
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext { User = user }
+                }
+            };
+
+            var mediatorField = typeof(BaseApiController).GetField("_mediator", BindingFlags.NonPublic | BindingFlags.Instance);
+            mediatorField.SetValue(controller, mockMediator.Object);
+
+            mockMediator.Setup(m => m.Send(It.Is<Delete.Command>(q => q.UserId == appUser.Id && q.BookId == book.BookId), default))
+                .ReturnsAsync(Result<Unit>.Success(Unit.Value));
+
+            var result = await controller.DeleteBook(book.BookId);
+
+            var objectResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
 
             context.Database.CloseConnection();
         }

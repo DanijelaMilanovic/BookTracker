@@ -1,40 +1,15 @@
 ﻿using Domain;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using API.Controllers;
-using Application.Core;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using System.Security.Claims;
 
 namespace BookTrackerTests.Persistence
 {
     public class DataContextTests
     {
-        private DbContextOptions<DataContext> CreateNewContextOptions()
-        {
-            var options = new DbContextOptionsBuilder<DataContext>()
-                .UseSqlite("Data Source=:memory:")
-                .Options;
-
-            return options;
-        }
-
-        private UserManager<AppUser> CreateUserManager(DataContext context)
-        {
-            var userStore = new UserStore<AppUser>(context);
-            var userManager = new UserManager<AppUser>(userStore, null, null, null, null, null, null, null, null);
-            return userManager;
-        }
-
         [Fact]
         public void CanConnectToSQlite()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
@@ -47,7 +22,7 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public void CanWriteFormat()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             var format= new Format
             {
                 Name = "Paperback"    
@@ -65,7 +40,7 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public void CanLoadFormat()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             var format = new List<Format>
             {
                 new Format { Name = "Paperback"},
@@ -86,7 +61,7 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public void CanLoadFormatById()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             var format = new Format
             {
                 Name = "Paperback"
@@ -107,7 +82,7 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public void CanEditFormat()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             var format = new Format
             {
                 Name = "Paperback"
@@ -131,7 +106,7 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public void CanDeleteFormat()
         {
-            var context = new DataContext(CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             var format = new Format
             {
                 Name = "Paperback"
@@ -154,13 +129,13 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public async Task CanAddUserToDatabase()
         {
-            var options = CreateNewContextOptions();
+            var options = TestSetup.CreateNewContextOptions();
 
             var context = new DataContext(options);
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
-            var userManager = CreateUserManager(context);
+            var userManager = TestSetup.CreateUserManager(context);
 
             var user = new AppUser
             {
@@ -180,11 +155,11 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public async Task CanGetUserById()
         {
-            var options = CreateNewContextOptions();
+            var options = TestSetup.CreateNewContextOptions();
 
             var context = new DataContext(options);
      
-            var userManager = CreateUserManager(context);
+            var userManager = TestSetup.CreateUserManager(context);
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
@@ -204,10 +179,10 @@ namespace BookTrackerTests.Persistence
         [Fact]
         public async Task CanAddAuthorsToBook()
         {
-            var options = CreateNewContextOptions();
+            var options = TestSetup.CreateNewContextOptions();
             var context = new DataContext(options);
 
-            var userManager = CreateUserManager(context);
+            var userManager = TestSetup.CreateUserManager(context);
             context.Database.OpenConnection();
             context.Database.EnsureCreated(); 
 
@@ -236,19 +211,7 @@ namespace BookTrackerTests.Persistence
                 Forename = "John Doe"
             };
 
-            var book = new Book
-            { 
-                AppUserId = appUser.Id, 
-                BookId = Guid.NewGuid(), 
-                Title = "Sample Book",
-                NoOfPages = 200,
-                YearOfPublishing = 2023,
-                PurshaseDate = new DateOnly(2023, 1, 1),
-                Price = 20.00m,
-                Rate = 5.00m,
-                Publisher = publisher,
-                Format = format 
-            };
+            var book = TestSetup.CreateBook(appUser.Id);
 
             context.Format.Add(format);
             context.Publisher.Add(publisher);

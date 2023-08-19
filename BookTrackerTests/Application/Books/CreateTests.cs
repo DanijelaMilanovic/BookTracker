@@ -1,19 +1,18 @@
-using Application.Books;
 using Domain;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Application.Books;
 using Application.Core;
+using MediatR;
 
 namespace BookTrackerTests.Application.Books
 {
-    public class DetailsTests
+    public class CreateTests
     {
         [Fact]
-        public async Task CanDetailBookApplication()
+        public async Task CanCreateBooksApplication()
         {
-            var context = new DataContext(TestSetup.    CreateNewContextOptions());
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
             var userManager = TestSetup.CreateUserManager(context);
 
             context.Database.OpenConnection();
@@ -28,16 +27,12 @@ namespace BookTrackerTests.Application.Books
 
             var book = TestSetup.CreateBook(appUser.Id);
 
-            context.Book.Add(book);
-            context.SaveChanges();
+            var handler = new Create.Handler(context);
 
-            await context.SaveChangesAsync();
-
-            var handler = new Details.Handler(context);
-
-            Result<Book> result = await handler.Handle(new Details.Query { UserId = appUser.Id, BookId = book.BookId }, CancellationToken.None);
+            Result<Unit> result = await handler.Handle(new Create.Command { Book = book }, CancellationToken.None);
 
             Assert.True(result.IsSuccess);
+            Assert.Equal(1, context.Book.Count());
 
             context.Database.CloseConnection();
         }
