@@ -1,5 +1,6 @@
 using Application.Books;
 using Application.Core;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ namespace BookTrackerTests.Application.Books
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
             var userManager = TestSetup.CreateUserManager(context);
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfiles()));
+            var mockMapper = new Mapper(mapperConfig);
 
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
@@ -35,7 +38,7 @@ namespace BookTrackerTests.Application.Books
             var editedBook = TestSetup.CreateBook(appUser.Id);
             editedBook.Title = "New edited title";
 
-            var handler = new Edit.Handler(context);
+            var handler = new Edit.Handler(context, mockMapper);
 
             Result<Unit> result = await handler.Handle(new Edit.Command { Book = editedBook, UserId = appUser.Id, BookId = book.BookId }, CancellationToken.None);
             Book edit = context.Book.Find(appUser.Id, book.BookId);

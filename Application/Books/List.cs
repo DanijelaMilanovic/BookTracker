@@ -25,6 +25,7 @@ namespace Application.Books
             public async Task<Result<List<Book>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var books = await _context.Book.Where(x => x.AppUserId == request.UserId).ToListAsync();
+
                 return Result<List<Book>>.Success(books);
             }
         }

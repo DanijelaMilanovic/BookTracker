@@ -2,6 +2,7 @@ using Persistence;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Application.Books;
+using Application.Core;
 
 namespace API.Extensions
 {
