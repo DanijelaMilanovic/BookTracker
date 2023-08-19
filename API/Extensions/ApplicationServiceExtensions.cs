@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Application.Books;
 using Application.Core;
+using FluentValidation;
 
 namespace API.Extensions
 {
@@ -17,6 +18,9 @@ namespace API.Extensions
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
             services.AddMediatR(typeof(List.Handler));
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddValidatorsFromAssemblyContaining<Create>();
+            
             return services;
         }
     }

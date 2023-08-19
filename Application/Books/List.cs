@@ -11,7 +11,6 @@ namespace Application.Books
         public class Query : IRequest<Result<List<Book>>> 
         { 
             public string UserId {get; set;}
-            
         }
 
         public class Handler : IRequestHandler<Query, Result<List<Book>>>
@@ -25,7 +24,6 @@ namespace Application.Books
             public async Task<Result<List<Book>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var books = await _context.Book.Where(x => x.AppUserId == request.UserId).ToListAsync();
-
                 return Result<List<Book>>.Success(books);
             }
         }

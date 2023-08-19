@@ -4,6 +4,7 @@ using Persistence;
 using Application.Books;
 using Application.Core;
 using MediatR;
+using static Application.Books.Create;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -35,6 +36,57 @@ namespace BookTrackerTests.Application.Books
             Assert.Equal(1, context.Book.Count());
 
             context.Database.CloseConnection();
+        }
+
+        [Fact]
+        public void ShouldValidateCorrectly()
+        {
+            var validator = new CommandValidator();
+
+            var validBook = new Book
+            {
+                Title = "Sample Title",
+                ISBN = "1234567890",
+                Description = "Sample description",
+                Image = "sample.jpg",
+                NoOfPages = 250,
+                Price = 19.99m,
+                Rate = 4.5m,
+                IsRead = true,
+                PublisherId = Guid.NewGuid(),
+                FormatId = Guid.NewGuid()
+            };
+
+            var invalidBook = new Book();
+
+            var validResults = validator.Validate(validBook);
+            //var invalidResults = validator.Validate(invalidBook);
+
+            Assert.True(validResults.IsValid);
+            //Assert.False(invalidResults.IsValid);
+        }
+
+        [Fact]
+        public void ShouldNotValidateCorrectly()
+        {
+            var validator = new CommandValidator();
+
+            var invalidBook = new Book
+            {
+                ISBN = "1234567890",
+                Description = "Sample description",
+                Image = "sample.jpg",
+                NoOfPages = 250,
+                Price = 19.99m,
+                Rate = 4.5m,
+                IsRead = true,
+                PublisherId = Guid.NewGuid(),
+                FormatId = Guid.NewGuid()
+            };
+
+            var invalidResults = validator.Validate(invalidBook);
+
+            Assert.False(invalidResults.IsValid);
         }
     }
 }
