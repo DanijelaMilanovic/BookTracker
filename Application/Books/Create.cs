@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Core;
 using Domain;
 using FluentValidation;
@@ -18,21 +13,11 @@ namespace Application.Books
             public Book Book {get; set;}
         }
 
-        public class CommandValidator : AbstractValidator<Book> 
+        public class CommandValidator : AbstractValidator<Command> 
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
-                RuleFor(x => x.ISBN).NotEmpty();
-                RuleFor(x => x.Description).NotEmpty();
-                RuleFor(x => x.Image).NotEmpty();
-                RuleFor(x => x.NoOfPages).NotEmpty();
-                RuleFor(x => x.Price).NotEmpty();
-                RuleFor(x => x.Rate).NotEmpty();
-                RuleFor(x => x.IsRead).NotEmpty();
-                RuleFor(x => x.PublisherId).NotEmpty();
-                RuleFor(x => x.FormatId).NotEmpty();
-
+                RuleFor(x => x.Book).SetValidator(new BookValidator());
             }
         }
 

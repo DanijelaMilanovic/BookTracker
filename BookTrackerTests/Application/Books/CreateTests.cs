@@ -1,10 +1,9 @@
-using Domain;
+﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Books;
 using Application.Core;
 using MediatR;
-using static Application.Books.Create;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -41,7 +40,7 @@ namespace BookTrackerTests.Application.Books
         [Fact]
         public void ShouldValidateCorrectly()
         {
-            var validator = new CommandValidator();
+            var validator = new Create.CommandValidator();
 
             var validBook = new Book
             {
@@ -57,19 +56,15 @@ namespace BookTrackerTests.Application.Books
                 FormatId = Guid.NewGuid()
             };
 
-            var invalidBook = new Book();
-
-            var validResults = validator.Validate(validBook);
-            //var invalidResults = validator.Validate(invalidBook);
-
+            var validResults = validator.Validate(new Create.Command { Book = validBook });
             Assert.True(validResults.IsValid);
-            //Assert.False(invalidResults.IsValid);
+
         }
 
         [Fact]
         public void ShouldNotValidateCorrectly()
         {
-            var validator = new CommandValidator();
+            var validator = new Create.CommandValidator();
 
             var invalidBook = new Book
             {
@@ -84,8 +79,7 @@ namespace BookTrackerTests.Application.Books
                 FormatId = Guid.NewGuid()
             };
 
-            var invalidResults = validator.Validate(invalidBook);
-
+            var invalidResults = validator.Validate(new Create.Command { Book = invalidBook });
             Assert.False(invalidResults.IsValid);
         }
     }
