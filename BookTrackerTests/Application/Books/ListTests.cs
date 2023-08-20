@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Books;
 using Application.Core;
+using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -32,7 +34,9 @@ namespace BookTrackerTests.Application.Books
             context.Book.AddRange(books);
             await context.SaveChangesAsync();
 
-            var handler = new List.Handler(context);
+            var mockLogger = new Mock<ILogger<List>>();
+
+            var handler = new List.Handler(context, mockLogger.Object);
 
             Result<List<Book>> result = await handler.Handle(new List.Query { UserId = appUser.Id }, CancellationToken.None);
             
