@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Moq;
 
 namespace BookTrackerTests
 {
@@ -20,8 +21,17 @@ namespace BookTrackerTests
         public static UserManager<AppUser> CreateUserManager(DataContext context)
         {
             var userStore = new UserStore<AppUser>(context);
-            var userManager = new UserManager<AppUser>(userStore, null, null, null, null, null, null, null, null);
+            var passwordHasher = new PasswordHasher<AppUser>();
+            
+            var userManager = new UserManager<AppUser>(
+                userStore, null, passwordHasher, null, null, null, null, null, null);
             return userManager;
+        }
+
+        public static Mock<UserManager<AppUser>> MockUserManager()
+        {
+            var userStoreMock = new Mock<IUserStore<AppUser>>();
+            return new Mock<UserManager<AppUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
         }
 
         public static Book CreateBook(string appUserId)

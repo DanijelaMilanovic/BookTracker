@@ -37,7 +37,6 @@ namespace Application.Books
                     _logger.LogInformation("Error while performing task");
                     return Result<List<Book>>.Faliure("Error while performing task");
                 }
-                
             }
         }
     }

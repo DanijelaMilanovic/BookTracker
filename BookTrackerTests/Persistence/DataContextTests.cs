@@ -168,7 +168,7 @@ namespace BookTrackerTests.Persistence
                 UserName = "TestUser"
             };
 
-            await userManager.CreateAsync(user);
+            await userManager.CreateAsync(user, "password");
 
             var savedUser = await userManager.FindByIdAsync(user.Id);
 
