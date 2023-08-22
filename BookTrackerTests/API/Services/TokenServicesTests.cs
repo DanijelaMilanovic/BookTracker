@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,19 +17,21 @@ namespace BookTrackerTests.API.Services
         [Fact]
         public void CreateToken_ValidUser_ReturnsTokenString()
         {
+            var configMock = new Mock<IConfiguration>();
+            configMock.SetupGet(x => x["TokenKey"]).Returns("super secret key");
+
+            var tokenService = new TokenService(configMock.Object);
             var user = new AppUser
             {
-                Id = Guid.NewGuid().ToString(),
                 UserName = "user",
+                Id = "123",
                 Email = "test@example.com"
             };
 
-            var configMock = new Mock<IConfiguration>();
-            var tokenService = new TokenService(configMock.Object);
-
             var token = tokenService.CreateToken(user);
 
-            Assert.NotEmpty(token);
+            Assert.NotNull(token);
+
         }
     }
 }

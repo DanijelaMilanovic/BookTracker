@@ -1,12 +1,14 @@
 using API.DTOs;
 using API.Services;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -41,6 +43,43 @@ namespace API.Controllers
             }
 
             return Unauthorized();
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) 
+        {
+            if(await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+            {
+                return BadRequest("Username is already taken");
+            }
+
+            if(await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+            {
+                return BadRequest("Email is already taken");
+            }
+
+            var user = new AppUser
+            {
+                Forename = registerDto.Forename,
+                Surname = registerDto.Surname,
+                Email = registerDto.Email,
+                UserName = registerDto.Username
+            };
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if(result.Succeeded)
+            {
+                return new UserDto
+                {
+                    Username = user.UserName,
+                    Forename = user.Forename,
+                    Surname = user.Surname,
+                    Token = _tokenService.CreateToken(user),
+                    Image = null
+                };
+            }
+            return BadRequest("Problem regidtering user");
         }
     }
 }

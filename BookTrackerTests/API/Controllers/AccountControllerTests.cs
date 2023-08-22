@@ -31,6 +31,8 @@ namespace BookTrackerTests.API.Controllers
             await userManager.CreateAsync(appUser, "password");
 
             var configMock = new Mock<IConfiguration>();
+            configMock.SetupGet(x => x["TokenKey"]).Returns("super secret key");
+
             var tokenService = new TokenService(configMock.Object);
 
             var controller = new AccountController(userManager, tokenService);
@@ -107,6 +109,8 @@ namespace BookTrackerTests.API.Controllers
             await userManager.CreateAsync(appUser, "password");
 
             var configMock = new Mock<IConfiguration>();
+            configMock.SetupGet(x => x["TokenKey"]).Returns("super secret key");
+
             var tokenService = new TokenService(configMock.Object);
 
             var controller = new AccountController(userManager, tokenService);
@@ -122,6 +126,120 @@ namespace BookTrackerTests.API.Controllers
             var objectResult = Assert.IsType<ActionResult<UserDto>>(result);
             var userDto = Assert.IsType<UserDto>(objectResult.Value);
             Assert.NotNull(userDto.Token);
+        }
+        [Fact]
+        public async Task CanRegisterUser()
+        {
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            var userManager = TestSetup.CreateUserManager(context);
+
+            var registerDto = new RegisterDto
+            {
+                Forename = "Forename",
+                Surname = "Surname",
+                Email = "test@example.com",
+                Username = "username",
+                Password = "password123"
+            };
+
+            var configMock = new Mock<IConfiguration>();
+            configMock.SetupGet(x => x["TokenKey"]).Returns("super secret key");
+
+            var tokenService = new TokenService(configMock.Object);
+
+            var controller = new AccountController(userManager, tokenService);
+
+            var result = await controller.Register(registerDto);
+
+            var objectResult = Assert.IsType<ActionResult<UserDto>>(result);
+            var userDto = Assert.IsType<UserDto>(objectResult.Value);
+
+            Assert.Equal("username", userDto.Username);
+            Assert.Equal("Forename", userDto.Forename);
+            Assert.Equal("Surname", userDto.Surname);
+        }
+
+        [Fact]
+        public async Task CanDetectAlreadyUsedUsername()
+        {
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            var userManager = TestSetup.CreateUserManager(context);
+            var appUser = new AppUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "user123",
+                Email = "test@example.com",
+                Forename = "forename",
+                Surname = "surname"
+            };
+            await userManager.CreateAsync(appUser, "password");
+
+            var registerDto = new RegisterDto
+            {
+                Forename = "Forename",
+                Surname = "Surname",
+                Email = "test@example.com",
+                Username = "user123",
+                Password = "password123"
+            };
+
+            var configMock = new Mock<IConfiguration>();
+            configMock.SetupGet(x => x["TokenKey"]).Returns("super secret key");
+
+            var tokenService = new TokenService(configMock.Object);
+
+            var controller = new AccountController(userManager, tokenService);
+
+            var result = await controller.Register(registerDto);
+
+            var objectResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("Username is already taken", objectResult.Value);
+        }
+
+        [Fact]
+        public async Task CanDetectAlreadyUsedEmail()
+        {
+            var context = new DataContext(TestSetup.CreateNewContextOptions());
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            var userManager = TestSetup.CreateUserManager(context);
+            var appUser = new AppUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "user",
+                Email = "test@example.com",
+                Forename = "forename",
+                Surname = "surname"
+            };
+            await userManager.CreateAsync(appUser, "password");
+
+            var registerDto = new RegisterDto
+            {
+                Forename = "Forename",
+                Surname = "Surname",
+                Email = "test@example.com",
+                Username = "user123",
+                Password = "password123"
+            };
+
+            var configMock = new Mock<IConfiguration>();
+            configMock.SetupGet(x => x["TokenKey"]).Returns("super secret key");
+
+            var tokenService = new TokenService(configMock.Object);
+
+            var controller = new AccountController(userManager, tokenService);
+
+            var result = await controller.Register(registerDto);
+
+            var objectResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("E is already taken", objectResult.Value);
         }
     }
 }
