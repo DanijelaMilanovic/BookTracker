@@ -5,6 +5,7 @@ using Application.Books;
 using Application.Core;
 using Moq;
 using Microsoft.Extensions.Logging;
+using Application.Interfaces;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -18,6 +19,9 @@ namespace BookTrackerTests.Application.Books
 
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
+
+            var userAccessorMock = new Mock<IUserAccessor>();
+            userAccessorMock.Setup(x => x.GetUsername()).Returns("user123");
 
             var appUser = new AppUser
             {
@@ -36,9 +40,9 @@ namespace BookTrackerTests.Application.Books
 
             var mockLogger = new Mock<ILogger<List>>();
 
-            var handler = new List.Handler(context, mockLogger.Object);
+            var handler = new List.Handler(context, mockLogger.Object, userAccessorMock.Object);
 
-            Result<List<Book>> result = await handler.Handle(new List.Query { UserId = appUser.Id }, CancellationToken.None);
+            Result<List<Book>> result = await handler.Handle(new List.Query(), CancellationToken.None);
             
             Assert.True(result.IsSuccess);
             Assert.Equal(2, result.Value.Count);

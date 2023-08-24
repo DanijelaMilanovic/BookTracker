@@ -10,8 +10,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBooks() 
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return HandleResult(await Mediator.Send(new List.Query { UserId = userId }));
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{id}")]

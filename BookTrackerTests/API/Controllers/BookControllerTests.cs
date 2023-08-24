@@ -16,6 +16,7 @@ namespace BookTrackerTests.API.Controllers
 {
     public class BookControllerTests
     {
+        
         [Fact]
         public async Task CanListBooks()
         {
@@ -63,8 +64,8 @@ namespace BookTrackerTests.API.Controllers
             var mediatorField = typeof(BaseApiController).GetField("_mediator", BindingFlags.NonPublic | BindingFlags.Instance);
             mediatorField.SetValue(controller, mockMediator.Object);
 
-            mockMediator.Setup(m => m.Send(It.Is<List.Query>(q => q.UserId == appUser.Id), default))
-                       .ReturnsAsync(Result<List<Book>>.Success(books));
+            mockMediator.Setup(m => m.Send(It.IsAny<List.Query>(), default))
+                .ReturnsAsync(Result<List<Book>>.Success(books));
 
             var result = await controller.GetBooks();
 
@@ -74,7 +75,7 @@ namespace BookTrackerTests.API.Controllers
 
             context.Database.CloseConnection();
         }
-
+        
         [Fact]
         public async Task CanGetBookById()
         {

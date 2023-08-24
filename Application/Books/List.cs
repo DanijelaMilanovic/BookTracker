@@ -4,6 +4,7 @@ using Persistence;
 using Application.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Application.Interfaces;
 
 namespace Application.Books
 {
@@ -11,24 +12,30 @@ namespace Application.Books
     {
         public class Query : IRequest<Result<List<Book>>> 
         { 
-            public string UserId {get; set;}
+            
         }
 
         public class Handler : IRequestHandler<Query, Result<List<Book>>>
         {
             private readonly DataContext _context;
             private readonly ILogger<List> _logger;
-            public Handler(DataContext context, ILogger<List> logger)
+            private readonly IUserAccessor _userAccessor;
+            
+            public Handler(DataContext context, ILogger<List> logger,  IUserAccessor userAccessor)
             {
                 _logger = logger;
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<List<Book>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => 
+                    x.UserName == _userAccessor.GetUsername());
+
                 try 
                 {
-                    var books = await _context.Book.Where(x => x.AppUserId == request.UserId).ToListAsync();
+                    var books = await _context.Book.Where(x => x.AppUserId == user.Id).ToListAsync();
                     _logger.LogInformation("Task was successfull");
                     return Result<List<Book>>.Success(books);
                 }

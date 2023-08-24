@@ -1,3 +1,4 @@
+using Application.Books;
 using AutoMapper;
 using Domain;
 
@@ -8,6 +9,7 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<Book, Book>();
+            CreateMap<Book, BookDto>();
         }
     }
 }
