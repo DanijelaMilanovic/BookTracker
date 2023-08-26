@@ -4,8 +4,8 @@ using Persistence;
 using Application.Books;
 using Application.Core;
 using Moq;
-using Microsoft.Extensions.Logging;
 using Application.Interfaces;
+using AutoMapper;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -38,11 +38,12 @@ namespace BookTrackerTests.Application.Books
             context.Book.AddRange(books);
             await context.SaveChangesAsync();
 
-            var mockLogger = new Mock<ILogger<List>>();
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfiles()));
+            var mockMapper = new Mapper(mapperConfig);
 
-            var handler = new List.Handler(context, mockLogger.Object, userAccessorMock.Object);
+            var handler = new List.Handler(context, userAccessorMock.Object, mockMapper);
 
-            Result<List<Book>> result = await handler.Handle(new List.Query(), CancellationToken.None);
+            Result<List<BookDto>> result = await handler.Handle(new List.Query(), CancellationToken.None);
             
             Assert.True(result.IsSuccess);
             Assert.Equal(2, result.Value.Count);

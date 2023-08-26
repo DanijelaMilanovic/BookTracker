@@ -11,10 +11,12 @@ namespace BookTrackerTests.Application.Books
 {
     public class EditTests
     {
+        [Fact]
         public async Task CanEditBookApplication()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
             var userManager = TestSetup.CreateUserManager(context);
+
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfiles()));
             var mockMapper = new Mapper(mapperConfig);
 
@@ -35,16 +37,15 @@ namespace BookTrackerTests.Application.Books
 
             await context.SaveChangesAsync();
 
-            var editedBook = TestSetup.CreateBook(appUser.Id);
-            editedBook.Title = "New edited title";
+            book.Title = "New edited title";
 
             var handler = new Edit.Handler(context, mockMapper);
 
-            Result<Unit> result = await handler.Handle(new Edit.Command { Book = editedBook, UserId = appUser.Id, BookId = book.BookId }, CancellationToken.None);
+            Result<Unit> result = await handler.Handle(new Edit.Command { Book = book, UserId = appUser.Id, BookId = book.BookId }, CancellationToken.None);
             Book edit = context.Book.Find(appUser.Id, book.BookId);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(edit.Title, editedBook.Title);
+            Assert.Equal(edit.Title, book.Title);
 
             context.Database.CloseConnection();
         }

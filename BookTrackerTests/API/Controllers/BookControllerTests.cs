@@ -1,6 +1,7 @@
 ﻿using API.Controllers;
 using Application.Books;
 using Application.Core;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -20,12 +21,8 @@ namespace BookTrackerTests.API.Controllers
         [Fact]
         public async Task CanListBooks()
         {
-            var services = new ServiceCollection();
             var context = new DataContext(TestSetup.CreateNewContextOptions());
 
-            services.AddSingleton(context);
-
-            var serviceProvider = services.BuildServiceProvider();
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
@@ -40,6 +37,10 @@ namespace BookTrackerTests.API.Controllers
             var books = new List<Book> {
                 TestSetup.CreateBook(appUser.Id) ,
                 TestSetup.CreateBook(appUser.Id) ,
+            };
+            var expectedbooks = new List<BookDto> {
+                TestSetup.CreateBookDto(appUser.Id) ,
+                TestSetup.CreateBookDto(appUser.Id) ,
             };
 
             context.Book.AddRange(books);
@@ -65,12 +66,12 @@ namespace BookTrackerTests.API.Controllers
             mediatorField.SetValue(controller, mockMediator.Object);
 
             mockMediator.Setup(m => m.Send(It.IsAny<List.Query>(), default))
-                .ReturnsAsync(Result<List<Book>>.Success(books));
+                .ReturnsAsync(Result<List<BookDto>>.Success(expectedbooks));
 
             var result = await controller.GetBooks();
 
             var objectResult = Assert.IsType<OkObjectResult>(result);
-            var returnedBooks = Assert.IsAssignableFrom<List<Book>>(objectResult.Value);
+            var returnedBooks = Assert.IsAssignableFrom<List<BookDto>>(objectResult.Value);
             Assert.Equal(2, returnedBooks.Count);
 
             context.Database.CloseConnection();
