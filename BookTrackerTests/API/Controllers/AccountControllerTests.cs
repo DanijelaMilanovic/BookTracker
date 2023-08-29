@@ -18,8 +18,8 @@ namespace BookTrackerTests.API.Controllers
         public async Task CanValidateLoginCredentials()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser
@@ -58,8 +58,8 @@ namespace BookTrackerTests.API.Controllers
         public async Task CanInvalidLoginCredentials()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser
@@ -95,8 +95,8 @@ namespace BookTrackerTests.API.Controllers
         public async Task HasToken()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser
@@ -132,8 +132,8 @@ namespace BookTrackerTests.API.Controllers
         public async Task CanRegisterUser()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
 
@@ -166,8 +166,8 @@ namespace BookTrackerTests.API.Controllers
         public async Task CanDetectAlreadyUsedUsername()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser
@@ -205,8 +205,8 @@ namespace BookTrackerTests.API.Controllers
         public async Task CanDetectAlreadyUsedEmail()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser
@@ -245,8 +245,8 @@ namespace BookTrackerTests.API.Controllers
         {
 
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
             var appUser = new AppUser

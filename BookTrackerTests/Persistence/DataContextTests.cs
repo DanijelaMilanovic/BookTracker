@@ -7,7 +7,7 @@ namespace BookTrackerTests.Persistence
     public class DataContextTests
     {
         [Fact]
-        public void CanConnectToSQlite()
+        public void CanConnectToSqLite()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
             
@@ -23,13 +23,14 @@ namespace BookTrackerTests.Persistence
         public void CanWriteFormat()
         {
             var context = new DataContext(TestSetup.CreateNewContextOptions());
-            var format= new Format
-            {
-                Name = "Paperback"    
-            };
+
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
+            var format = new Format
+            {
+                Name = "Paperback"
+            };
             context.Format.Add(format);
             context.SaveChanges();
 
@@ -43,8 +44,8 @@ namespace BookTrackerTests.Persistence
             var context = new DataContext(TestSetup.CreateNewContextOptions());
             var format = new List<Format>
             {
-                new Format { Name = "Paperback"},
-                new Format { Name = "Hardback"}
+                new() { Name = "Paperback"},
+                new() { Name = "Hardback"}
             };
             
             context.Database.OpenConnection();
@@ -120,8 +121,8 @@ namespace BookTrackerTests.Persistence
             context.Format.Remove(format);
             context.SaveChanges();
 
-            var deltedFormat = context.Format.Find(format.FormatId);
-            Assert.Null(deltedFormat);
+            var deletedFormat = context.Format.Find(format.FormatId);
+            Assert.Null(deletedFormat);
 
             context.Database.CloseConnection();
         }
@@ -132,8 +133,8 @@ namespace BookTrackerTests.Persistence
             var options = TestSetup.CreateNewContextOptions();
 
             var context = new DataContext(options);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userManager = TestSetup.CreateUserManager(context);
 
@@ -160,8 +161,8 @@ namespace BookTrackerTests.Persistence
             var context = new DataContext(options);
      
             var userManager = TestSetup.CreateUserManager(context);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var user = new AppUser
             {
@@ -183,8 +184,8 @@ namespace BookTrackerTests.Persistence
             var context = new DataContext(options);
 
             var userManager = TestSetup.CreateUserManager(context);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated(); 
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync(); 
 
             var appUser = new AppUser 
             { 
@@ -202,7 +203,7 @@ namespace BookTrackerTests.Persistence
             {
                 PublisherId = new Guid(),
                 Name = "Publisher",
-                Address = "Adress"
+                Address = "Address"
             };
 
             var author = new Author
@@ -218,7 +219,7 @@ namespace BookTrackerTests.Persistence
             context.Author.Add(author);
             context.Book.Add(book);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             var bookAuthors = new BookAuthors 
             { 
@@ -228,14 +229,13 @@ namespace BookTrackerTests.Persistence
             };
 
             context.BookAuthors.Add(bookAuthors);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             var savedBookAuthors = context.BookAuthors
-                .Where(ba => ba.AppUserId == appUser.Id && ba.BookId == book.BookId && ba.AuthorId == author.AuthorId)
-                .FirstOrDefault();
+                .FirstOrDefault(ba => ba.AppUserId == appUser.Id && ba.BookId == book.BookId && ba.AuthorId == author.AuthorId);
 
             Assert.NotNull(savedBookAuthors);
-            context.Database.CloseConnection();
+            await context.Database.CloseConnectionAsync();
         }
     }
 }

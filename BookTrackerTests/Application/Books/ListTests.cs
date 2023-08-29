@@ -17,8 +17,8 @@ namespace BookTrackerTests.Application.Books
             var context = new DataContext(TestSetup.CreateNewContextOptions());
             var userManager = TestSetup.CreateUserManager(context);
 
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var userAccessorMock = new Mock<IUserAccessor>();
             userAccessorMock.Setup(x => x.GetUsername()).Returns("user123");

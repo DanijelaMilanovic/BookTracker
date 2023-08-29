@@ -1,5 +1,7 @@
 using Application.Core;
+using Application.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Books
@@ -8,21 +10,26 @@ namespace Application.Books
     {
          public class Command : IRequest<Result<Unit>> 
         { 
-            public string UserId { get; set; }
             public Guid BookId { get; set; }
-            
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context) 
+            private readonly IUserAccessor _userAccessor;
+            
+            public Handler(DataContext context, IUserAccessor userAccessor) 
             {
                 _context = context;
+                _userAccessor = userAccessor;
+
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var book = await _context.Book.FindAsync(request.UserId, request.BookId);
+                var user = await _context.Users.FirstOrDefaultAsync(x => 
+                    x.UserName == _userAccessor.GetUsername());
+                    
+                var book = await _context.Book.FindAsync(user.Id, request.BookId);
 
                 if(book == null) return null;
 

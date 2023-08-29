@@ -10,17 +10,16 @@ namespace BookTrackerTests.Infrastructure.Security
         [Fact]
         public void CanGetUsername()
         {
-            // Arrange
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, "user123")
+                new(ClaimTypes.Name, "user123")
             };
 
             var identity = new ClaimsIdentity(claims);
             var claimsPrincipal = new ClaimsPrincipal(identity);
 
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext.User).Returns(claimsPrincipal);
+            httpContextAccessorMock.Setup(x => x.HttpContext!.User).Returns(claimsPrincipal);
 
             var userAccessor = new UserAccessor(httpContextAccessorMock.Object);
 

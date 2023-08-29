@@ -1,3 +1,4 @@
+using API.DTOs;
 using Domain;
 
 namespace Application.Books
@@ -21,5 +22,7 @@ namespace Application.Books
         public Guid FormatId { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
+        public ICollection<AuthorDto> Authors { get; set; } = new List<AuthorDto>();
+
     }
 }

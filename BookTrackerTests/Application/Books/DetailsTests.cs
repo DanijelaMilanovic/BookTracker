@@ -1,10 +1,11 @@
 using Application.Books;
 using Domain;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Core;
+using Application.Interfaces;
+using Moq;
+using AutoMapper;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -16,8 +17,8 @@ namespace BookTrackerTests.Application.Books
             var context = new DataContext(TestSetup.    CreateNewContextOptions());
             var userManager = TestSetup.CreateUserManager(context);
 
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var appUser = new AppUser
             {
@@ -26,16 +27,20 @@ namespace BookTrackerTests.Application.Books
             };
             await userManager.CreateAsync(appUser);
 
+            var userAccessorMock = new Mock<IUserAccessor>();
+            userAccessorMock.Setup(x => x.GetUsername()).Returns("user123");
+
             var book = TestSetup.CreateBook(appUser.Id);
 
             context.Book.Add(book);
-            context.SaveChanges();
-
             await context.SaveChangesAsync();
 
-            var handler = new Details.Handler(context);
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfiles()));
+            var mockMapper = new Mapper(mapperConfig);
 
-            Result<Book> result = await handler.Handle(new Details.Query { UserId = appUser.Id, BookId = book.BookId }, CancellationToken.None);
+            var handler = new Details.Handler(context, mockMapper, userAccessorMock.Object);
+
+            Result<BookDto> result = await handler.Handle(new Details.Query { BookId = book.BookId }, CancellationToken.None);
 
             Assert.True(result.IsSuccess);
 

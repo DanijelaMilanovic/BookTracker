@@ -68,7 +68,7 @@ namespace API.Controllers
             {
                 return CreateUserObject(user);
             }
-            return BadRequest("Problem regidtering user");
+            return BadRequest("Problem registering user");
         }
 
         [Authorize]
@@ -84,10 +84,10 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                    Forename = user.Forename,
-                    Surname = user.Surname,
-                    Token = _tokenService.CreateToken(user),
-                    Image = null
+                Forename = user.Forename,
+                Surname = user.Surname,
+                Token = _tokenService.CreateToken(user),
+                Image = null
             };
         }
     }

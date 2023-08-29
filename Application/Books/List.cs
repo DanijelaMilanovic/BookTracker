@@ -4,15 +4,13 @@ using Application.Core;
 using MediatR;
 using Application.Interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Application.Books
 {
     public class List
     {
-        public class Query : IRequest<Result<List<BookDto>>> 
-        { 
-            
-        }
+        public class Query : IRequest<Result<List<BookDto>>> { }
 
         public class Handler : IRequestHandler<Query, Result<List<BookDto>>>
         {
@@ -33,10 +31,10 @@ namespace Application.Books
                     x.UserName == _userAccessor.GetUsername());
 
                 var books = await _context.Book.Where(x => x.AppUserId == user.Id)
-                    .Include(p => p.Publisher).Include(f => f.Format).Include(u => u.AppUser).ToListAsync();
+                            .ProjectTo<BookDto>(_mapper.ConfigurationProvider)
+                            .ToListAsync(cancellationToken);
                 
-                var booksToReturn = _mapper.Map<List<BookDto>>(books);
-                return Result<List<BookDto>>.Success(booksToReturn);
+                return Result<List<BookDto>>.Success(books);
             }
         }
     }

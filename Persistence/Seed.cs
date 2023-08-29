@@ -61,7 +61,7 @@ namespace Persistence
                     IsRead = true,
                     FormatId = new Guid("0390d402-1700-4995-86f4-6de7b79b1c6a"),
                     PublisherId = new Guid("efc3a0cf-79cb-4611-8fbc-98c16f53b4c6"),
-                    Authors = new List<BookAuthors> {
+                    BookAuthors = new List<BookAuthors> {
                         new BookAuthors {
                             Author = authors[1]
                         },
@@ -84,7 +84,7 @@ namespace Persistence
                     IsRead = true,
                     FormatId = new Guid("0390d402-1700-4995-86f4-6de7b79b1c6a"),
                     PublisherId = new Guid("f0b651a1-b419-4b5f-8092-774fdb130427"),
-                    Authors = new List<BookAuthors> {
+                    BookAuthors = new List<BookAuthors> {
                         new BookAuthors {
                             Author = authors[0]
                         }

@@ -48,7 +48,7 @@ namespace Persistence
                 .HasForeignKey(aa => aa.AuthorId);
             builder.Entity<BookAuthors>()
                 .HasOne(b => b.Book)
-                .WithMany(a => a.Authors)
+                .WithMany(a => a.BookAuthors)
                 .HasForeignKey(ba => new {ba.AppUserId, ba.BookId});
 
             builder.Entity<BookGenres>(x => x.HasKey(b => new {b.AppUserId,  b.BookId, b.GenreId}));

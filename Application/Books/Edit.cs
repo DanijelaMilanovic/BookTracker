@@ -1,7 +1,10 @@
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Books
@@ -11,26 +14,38 @@ namespace Application.Books
         public class Command : IRequest<Result<Unit>> 
         { 
             public Book Book {get; set;}
-            public string UserId { get; set; }
-            public Guid BookId { get; set; }
-            
+        }
+
+        public class CommandValidator : AbstractValidator<Command> {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Book).SetValidator(new BookValidator());
+            }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper) 
+            private readonly IUserAccessor _userAccessor;
+
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor) 
             {
                 _mapper = mapper;
                 _context = context;
+                _userAccessor = userAccessor;
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var book = await _context.Book.FindAsync(request.UserId, request.BookId);
+                var user = await _context.Users.FirstOrDefaultAsync(x => 
+                    x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                _mapper.Map(request.Book, book);
-                var result = await _context.SaveChangesAsync() > 0;
+                request.Book.AppUserId = user!.Id;
+                request.Book.AppUser = user;
+                var book = await _context.Book.FindAsync(user.Id, request.Book.BookId);
+
+                _mapper.Map<Book, Book>(request.Book, book!);
+                var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (!result) return Result<Unit>.Faliure("Failed to update book");
 

@@ -1,11 +1,12 @@
 using Application.Books;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Persistence;
-using System.Linq;
 
 namespace BookTrackerTests.Application.Books
 {
@@ -20,8 +21,8 @@ namespace BookTrackerTests.Application.Books
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfiles()));
             var mockMapper = new Mapper(mapperConfig);
 
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            await context.Database.OpenConnectionAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var appUser = new AppUser
             {
@@ -30,24 +31,25 @@ namespace BookTrackerTests.Application.Books
             };
             await userManager.CreateAsync(appUser);
 
+            var userAccessorMock = new Mock<IUserAccessor>();
+            userAccessorMock.Setup(x => x.GetUsername()).Returns("user123");
+
             var book = TestSetup.CreateBook(appUser.Id);
 
             context.Book.Add(book);
-            context.SaveChanges();
-
             await context.SaveChangesAsync();
 
             book.Title = "New edited title";
 
-            var handler = new Edit.Handler(context, mockMapper);
+            var handler = new Edit.Handler(context, mockMapper, userAccessorMock.Object);
 
-            Result<Unit> result = await handler.Handle(new Edit.Command { Book = book, UserId = appUser.Id, BookId = book.BookId }, CancellationToken.None);
-            Book edit = context.Book.Find(appUser.Id, book.BookId);
+            Result<Unit> result = await handler.Handle(new Edit.Command { Book = book }, CancellationToken.None);
+            Book edit = (await context.Book.FindAsync(appUser.Id, book.BookId))!;
 
             Assert.True(result.IsSuccess);
             Assert.Equal(edit.Title, book.Title);
 
-            context.Database.CloseConnection();
+            await context.Database.CloseConnectionAsync();
         }
     }
 }

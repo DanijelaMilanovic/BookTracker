@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using Moq;
 using Application.Books;
 
 namespace BookTrackerTests
@@ -29,12 +28,6 @@ namespace BookTrackerTests
             return userManager;
         }
 
-        public static Mock<UserManager<AppUser>> MockUserManager()
-        {
-            var userStoreMock = new Mock<IUserStore<AppUser>>();
-            return new Mock<UserManager<AppUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
-        }
-
         public static Book CreateBook(string appUserId)
         {
             var format = new Format
@@ -46,7 +39,7 @@ namespace BookTrackerTests
             {
                 PublisherId = Guid.NewGuid(),
                 Name = "Publisher",
-                Address = "Adress"
+                Address = "Address"
             };
 
             var book = new Book
@@ -64,34 +57,22 @@ namespace BookTrackerTests
             };
             return book;
         }
-        public static BookDto CreateBookDto(string appUserId)
+        public static BookDto CreateBookDto(Book book)
         {
-            var format = new Format
+            var bookDto = new BookDto
             {
-                FormatId = Guid.NewGuid(),
-                Name = "Format1"
+                AppUserId = book.AppUserId,
+                BookId = book.BookId,
+                Title = book.Title,
+                NoOfPages = book.NoOfPages,
+                YearOfPublishing = book.YearOfPublishing,
+                PurshaseDate = book.PurshaseDate,
+                Price = book.Price,
+                Rate = book.Rate,
+                Publisher = book.Publisher,
+                Format = book.Format
             };
-            var publisher = new Publisher
-            {
-                PublisherId = Guid.NewGuid(),
-                Name = "Publisher",
-                Address = "Adress"
-            };
-
-            var book = new BookDto
-            {
-                AppUserId = appUserId,
-                BookId = Guid.NewGuid(),
-                Title = "Test Book",
-                NoOfPages = 200,
-                YearOfPublishing = 2023,
-                PurshaseDate = new DateOnly(2023, 1, 1),
-                Price = 20.00m,
-                Rate = 5.00m,
-                Publisher = publisher,
-                Format = format
-            };
-            return book;
+            return bookDto;
         }
     }
 }

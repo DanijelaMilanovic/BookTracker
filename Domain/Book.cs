@@ -19,7 +19,7 @@ namespace Domain
         public Guid FormatId { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public ICollection<BookAuthors> Authors { get; set; } = new List<BookAuthors>();
+        public ICollection<BookAuthors> BookAuthors { get; set; } = new List<BookAuthors>();
         public ICollection<BookGenres> Genres { get; set; } = new List<BookGenres>();
         public ICollection<BookSeries> Series { get; set; } = new List<BookSeries>();
     }
