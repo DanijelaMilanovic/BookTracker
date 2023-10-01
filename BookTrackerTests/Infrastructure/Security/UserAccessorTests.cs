@@ -23,10 +23,8 @@ namespace BookTrackerTests.Infrastructure.Security
 
             var userAccessor = new UserAccessor(httpContextAccessorMock.Object);
 
-            // Act
             var username = userAccessor.GetUsername();
 
-            // Assert
             Assert.Equal("user123", username);
         }
     }

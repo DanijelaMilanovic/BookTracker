@@ -16,10 +16,18 @@ delete FROM Author
 delete from AspNetUsers
 
 insert into Book (BookId, ISBN, Title,Image, NoOfPages, YearOfPublishing, Price, Rate, IsRead, PublisherId, AppUserId, FormatId, PurshaseDate)
-VALUES ("1ae9c17a-e3d1-4650-8cac-76fa5399027f","9788681856062", "Dvor trnja i ruža","", 410, 2021, 20.00, 5.0, true,"efc3a0cf-79cb-4611-8fbc-98c16f53b4c6","bea397a3-ccc7-4212-8a3e-f11d38fdae84","0390d402-1700-4995-86f4-6de7b79b1c6a", "13-07-2023")
+VALUES ("1ae9c17a-e3d1-4650-8cac-76fa5399027f","9788681856062", "Dvor trnja i ruža","dvor-trnja-i-ruza.png", 410, 2021, 20.00, 5.0, true,"efc3a0cf-79cb-4611-8fbc-98c16f53b4c6","c6878776-9e45-452a-874f-f8f078593c20","0390d402-1700-4995-86f4-6de7b79b1c6a", "1/01/2022");
+
+insert into Book (BookId, ISBN, Title,Image, NoOfPages, YearOfPublishing, Price, Rate, IsRead, PublisherId, AppUserId, FormatId, PurshaseDate)
+VALUES ("1ae9c17a-e3d1-1650-8cac-76fa5399027f","9788681856062", "Dvor magle i srdzbe","dvor-magle-i-srdzbe.png", 410, 2021, 20.00, 4.5, true,"efc3a0cf-79cb-4611-8fbc-98c16f53b4c6","c6878776-9e45-452a-874f-f8f078593c20","0390d402-1700-4995-86f4-6de7b79b1c6a", "1/01/2022");
+
+insert into Book (BookId, ISBN, Title,Image, NoOfPages, YearOfPublishing, Price, Rate, IsRead, PublisherId, AppUserId, FormatId, PurshaseDate)
+VALUES ("1ae9c17a-e3d1-1650-8cac-76fa5399020f","9788681856062", "Dvor srebrnih plamenova","dvor-srebrnih-plamenova.png", 410, 2021, 20.00, 0.0, false,"efc3a0cf-79cb-4611-8fbc-98c16f53b4c6","c6878776-9e45-452a-874f-f8f078593c20","0390d402-1700-4995-86f4-6de7b79b1c6a", "1/01/2022");
 
 select Book.Title, Author.Forename from Author,Book JOIN BookAuthors on BookAuthors.AuthorId = Author.AuthorId and BookAuthors.BookId = Book.BookId and BookAuthors.AppUserId = Book.AppUserId;
 
 UPDATE Book
-SET PurshaseDate = "07/13/2023"
-WHERE Book.BookId ="1ae9c17a-e3d1-4650-8cac-76fa5399027f";
+SET IsRead = "false"
+WHERE Book.BookId ="1ae9c17a-e3d1-1650-8cac-76fa5399020f";
+
+DELETE from book

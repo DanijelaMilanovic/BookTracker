@@ -95,12 +95,12 @@ namespace BookTrackerTests.Persistence
             context.SaveChanges();
 
             var loadedFormat = context.Format.Find(format.FormatId);
-            loadedFormat.Name = "Hardback";
+            loadedFormat!.Name = "Hardback";
 
             context.SaveChanges();
 
             var updatedFormat = context.Format.Find(format.FormatId);
-            Assert.Equal("Hardback", updatedFormat.Name);
+            Assert.Equal("Hardback", updatedFormat!.Name);
 
             context.Database.CloseConnection();
         }

@@ -48,7 +48,7 @@ namespace BookTrackerTests.Application.Books
             Assert.True(result.IsSuccess);
             Assert.Equal(2, result.Value.Count);
 
-            context.Database.CloseConnection();
+            await context.Database.CloseConnectionAsync();
         }
     }
 }

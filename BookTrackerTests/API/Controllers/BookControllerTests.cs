@@ -69,6 +69,7 @@ namespace BookTrackerTests.API.Controllers
             var result = await controller.GetBooks();
 
             var objectResult = Assert.IsType<OkObjectResult>(result);
+
             var returnedBooks = Assert.IsAssignableFrom<List<BookDto>>(objectResult.Value);
             Assert.Equal(2, returnedBooks.Count);
             Assert.Equal(expectedBooks[0].Title, returnedBooks[0].Title);
