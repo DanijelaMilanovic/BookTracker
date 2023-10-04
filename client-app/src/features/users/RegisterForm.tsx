@@ -23,7 +23,7 @@ export default observer(function RegisterForm() {
             >
                 {({handleSubmit, isSubmitting, errors, isValid, dirty})=> (
                     <Form className="ui form error" onSubmit={handleSubmit} autoCorrect="off">
-                        <Header as="h2" content="Sign up to BookTracker" color="teal" textAlign="center"></Header>
+                        <Header as="h2" content="Sign up to BookTracker" className="custom-label-color" textAlign="center"></Header>
                         <CustomTextInput placeholder="Forename" name="forename"/>
                         <CustomTextInput placeholder="Surname" name="surname"/>
                         <CustomTextInput placeholder="Username" name="username"/>
@@ -37,6 +37,7 @@ export default observer(function RegisterForm() {
                             loading={isSubmitting} 
                             positive content="Register" 
                             type="submit" fluid
+                            className="custom-button-color"
                         />
                     </Form>
                 )}

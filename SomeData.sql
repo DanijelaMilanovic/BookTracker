@@ -27,7 +27,19 @@ VALUES ("1ae9c17a-e3d1-1650-8cac-76fa5399020f","9788681856062", "Dvor srebrnih p
 select Book.Title, Author.Forename from Author,Book JOIN BookAuthors on BookAuthors.AuthorId = Author.AuthorId and BookAuthors.BookId = Book.BookId and BookAuthors.AppUserId = Book.AppUserId;
 
 UPDATE Book
-SET IsRead = "false"
+SET Description = "Nesta Arčeron je oduvek bila razdražljivo ponosna, brzo bi se razgnevila i sporo opraštala. A otkako je bila na silu primorana da uđe u Kotao i postane visokorodna vilenjakinja, muči se da pronađe svoj mir u čudnom, smrtonosnom svetu u kojem se obrela. Što je još gore, čini se da ne može da pređe preko užasa rata s Hibernijom i svega što je u njemu izgubila.
+
+Osoba koja rasplamsa njenu zapaljivu narav više od svih drugih jeste Kasijan, ratnik prekaljen u borbama, čiji ga položaj na Risandovom i Fejrinom Noćnom dvoru stalno drži u Nestinoj orbiti. Ali njena ćud nije jedino što Kasijan ume da razgori. Vatra među njima je neporeciva, a samo gori sve jače kad su primorani da budu blizu jedno drugom.
+
+U međuvremenu, izdajničke ljudske kraljice, koje su se za vreme prošlog rata vratile na kontinent, sada su obrazovale opasan nov savez i tako zapretile krhkom miru koji je zavladao kraljevstvima vilenjaka i ljudi. A ključ za osujećenje njihovog plana mogao bi da se zasniva upravo na potrebi da se Kasijan i Nesta suoče s prošlošću koja ih proganja.
+
+Na širokoj pozadini sveta spaljenog ratom i izmučenog neizvesnošću, Nesta i Kasijan se bore sa čudovištima i spolja i iznutra, dok traže prihvatanje – i isceljenje – jedno drugom u naručju."
 WHERE Book.BookId ="1ae9c17a-e3d1-1650-8cac-76fa5399020f";
 
 DELETE from book
+
+insert into BookAuthors values ("1ae9c17a-e3d1-4650-8cac-76fa5399027f","c6878776-9e45-452a-874f-f8f078593c20","BF9B47ED-9419-4A96-80E7-78BBBD5B70E3");
+insert into BookAuthors values ("1ae9c17a-e3d1-1650-8cac-76fa5399027f","c6878776-9e45-452a-874f-f8f078593c20","BF9B47ED-9419-4A96-80E7-78BBBD5B70E3");
+insert into BookAuthors values ("1ae9c17a-e3d1-1650-8cac-76fa5399020f","c6878776-9e45-452a-874f-f8f078593c20","BF9B47ED-9419-4A96-80E7-78BBBD5B70E3");
+
+)

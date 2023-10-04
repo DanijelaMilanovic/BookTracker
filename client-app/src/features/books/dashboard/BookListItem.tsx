@@ -30,10 +30,12 @@ export default function BookListItem({book}: Props) {
                                 {book.title}
                             </Item.Header>
                             <Item.Description>
-                                <Label color="green">
-                                    Sara J. Mass
+                            {book.authors.map((author, index) => (
+                                <Label key={index} color="green">
+                                    {author.forename} {author.surename}
                                 </Label>
-                            </Item.Description>
+                            ))}
+                        </Item.Description>
                         </Item.Content>
                         <Item.Extra style={{ textAlign: 'right' }}>
                             <Rating icon="star" size="huge" maxRating={5} style={{ marginLeft: 'auto' }} disabled defaultRating={book.rate}></Rating>

@@ -5,12 +5,6 @@ import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 
-const sleep = (deley: number) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, deley)
-    })
-}
-
 axios.defaults.baseURL = 'http://localhost:5161/api';
 
 axios.interceptors.request.use(config => {

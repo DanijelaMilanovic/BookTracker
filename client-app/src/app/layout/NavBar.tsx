@@ -13,9 +13,8 @@ export default observer ( function NavBar() {
                     BookTracker
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/books' name='Books'/>
-                <Menu.Item as={NavLink} to='/errors' name='Errors'/>
                 <Menu.Item>
-                    <Button as={NavLink} to='/createBook' positive content = 'Add Book'/>
+                    <Button as={NavLink} to='/createBook' className='custom-button-color' content = 'Add Book'/>
                 </Menu.Item>
                 <MenuItem position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar  spaced='right' />

@@ -1,11 +1,12 @@
 import { Author } from "./author";
+import { Format } from "./format";
 import { Profile } from "./profile";
 import { Publisher } from "./publisher";
 
 export interface Book {
     bookId: string;
     title: string;
-    ISBN: string;
+    isbn: string;
     image: string;
     purchaseDate: Date | null;
     noOfPages: number;
@@ -17,6 +18,7 @@ export interface Book {
     profile: Profile;
     publisher: Publisher;
     authors: Author[];
+    format: Format;
 }
 
 export class Book implements Book {
@@ -28,7 +30,7 @@ export class Book implements Book {
 export class BookFormValues {
     bookId?: string = undefined;
     title: string = "";
-    ISBN: string = "";
+    isbn: string = "";
     image: string = "";
     purchaseDate: Date | null = null;
     noOfPages: number = 0;
@@ -42,7 +44,7 @@ export class BookFormValues {
         if(book) {
             this.bookId = book.bookId;
             this.title = book.title;
-            this.ISBN = book.ISBN;
+            this.isbn = book.isbn;
             this.image = book.image;
             this.purchaseDate = book.purchaseDate;
             this.noOfPages = book.noOfPages;

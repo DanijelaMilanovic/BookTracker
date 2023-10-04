@@ -1,7 +1,7 @@
 export interface Author {
     authorId: string;
     forename: string;
-    surname: string;
+    surename: string;
     bio: string;
 }
 
@@ -14,14 +14,14 @@ export class Author implements Author {
 export class AuthorFormValues {
     authorId?: string = undefined;
     forename: string = "";
-    surname: string = "";
+    surename: string = "";
     bio: string = "";
 
     constructor(author?: AuthorFormValues) {
         if(author) {
             this.authorId = author.authorId;
             this.forename = author.forename;
-            this.surname = author.surname;
+            this.surename = author.surename;
             this.bio = author.bio;
         }
     }
