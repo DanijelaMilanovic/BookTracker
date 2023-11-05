@@ -1,6 +1,6 @@
 # BookTracker for Personal Library Management
 
-This project was developed as a practical component of my thesis "The Role and Significance of Refactoring in Test-Driven Software Development" at the Faculty of Electrical Engineering in East Sarajevo. Tests for this project were conducted using the XUnit testing framework, achieving test coverage of over 85%.
+"BookTracker" was developed as a practical component of my thesis "The Role and Significance of Refactoring in Test-Driven Software Development" at the Faculty of Electrical Engineering in East Sarajevo. Tests for this project were conducted using the XUnit testing framework, achieving test coverage of over 85%.
 
 ## Introduction
 
